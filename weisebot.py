@@ -1,9 +1,10 @@
 #Simple bot for Twitter handle @WeiseBot created by @WeiseGamer, aka Thomas Hughes
 #Source can be found (sans the covert.py which contains API tokens/keys) at https://github.com/weiseguy
 
+from time import sleep
+from random import randint
 import tweepy
 from covert import *
-from time import sleep
 
 #~~~~~~~~Bot Auth Setup~~~~~~~~~#
 
@@ -11,7 +12,7 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 auth.secure = True;
 tAPI = tweepy.API(auth)
-myBot = tAPI.get_user(screen_name = "@weisebot")
+myBot = tAPI.get_user(screen_name = "@gamebite10")
 
 #~~~~~~~End Bot Auth Setup~~~~~~#
 
@@ -41,9 +42,12 @@ while i < len(hashTags):
 
                 #Found Tweet bot hasn't RT'd or Fav'd
                 if (tweet.retweeted == False or tweet.favorited == False):
-                    tweet.retweet()
                     tweet.favorite()
-                    print("Retweeted and favorited the tweet")
+                    print("Favorited the tweet")
+                    if 2 < randint(0, 9):
+                        tweet.retweet()
+                        sleep(15) # Para que los usuarios que me siguen no vean que gb10 hace 10 reetweets por segundo
+                        print("Retweeted")
 
                 #Found User bot hasn't followed
                 if (tweet.user.following == False):
